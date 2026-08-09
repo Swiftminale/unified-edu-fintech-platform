@@ -1,0 +1,96 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  SuperAdmin
+  SchoolSupervisor
+  SchoolAdmin
+  BankAdmin
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(SchoolAdmin)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id         String    @id @default(uuid())
+  name       String
+  email      String?   @unique
+  isArchived Boolean   @default(false)
+  classId    String?
+  class      Class?    @relation(fields: [classId], references: [id])
+  invoices   Invoice[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Teacher {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?  @unique
+  classes   Class[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Class {
+  id         String      @id @default(uuid())
+  name       String      @unique
+  teacherId  String?
+  teacher    Teacher?    @relation(fields: [teacherId], references: [id])
+  students   Student[]
+  timetables Timetable[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Timetable {
+  id        String   @id @default(uuid())
+  dayOfWeek String
+  subject   String
+  startTime String
+  endTime   String
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum InvoiceStatus {
+  PAID
+  UNPAID
+  CANCELLED
+}
+
+model Invoice {
+  id             String          @id @default(uuid())
+  amount         Float
+  status         InvoiceStatus   @default(UNPAID)
+  studentId      String
+  student        Student         @relation(fields: [studentId], references: [id])
+  paymentLedgers PaymentLedger[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model PaymentLedger {
+  id        String   @id @default(uuid())
+  bankTxId  String   @unique
+  amount    Float
+  invoiceId String
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
