@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "/Users/tesfayelemi/.gemini/antigravity-ide/scratch/unified-edu-fintech-platform/apps/backend/src/generated/prisma"
 }
 
 enum Role {
