@@ -23,6 +23,19 @@ services:
     volumes:
       - redis_data:/data
 
+  caddy:
+    image: caddy:2-alpine
+    container_name: uefp-caddy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
 volumes:
   postgres_data:
   redis_data:
+  caddy_data:
+  caddy_config:
