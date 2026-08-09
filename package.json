@@ -1,0 +1,18 @@
+{
+  "name": "unified-edu-fintech-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm --prefix apps/backend run start:dev",
+    "dev:frontend": "npm --prefix apps/frontend run dev",
+    "build:backend": "npm --prefix apps/backend run build",
+    "build:frontend": "npm --prefix apps/frontend run build"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.24",
+    "next": "^16.3.0",
+    "typescript": "^5.9.3"
+  }
+}
