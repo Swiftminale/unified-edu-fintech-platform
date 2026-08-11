@@ -5,7 +5,6 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "/Users/tesfayelemi/.gemini/antigravity-ide/scratch/unified-edu-fintech-platform/apps/backend/src/generated/prisma"
 }
 
 enum Role {
@@ -15,40 +14,96 @@ enum Role {
   BankAdmin
 }
 
+model School {
+  id        String    @id @default(uuid())
+  name      String
+  address   String?
+  phone     String?
+  users     User[]
+  students  Student[]
+  teachers  Teacher[]
+  grades    Grade[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
   name      String
   role      Role     @default(SchoolAdmin)
+  schoolId  String?
+  school    School?  @relation(fields: [schoolId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model Student {
-  id         String    @id @default(uuid())
-  name       String
-  email      String?   @unique
-  isArchived Boolean   @default(false)
-  classId    String?
-  class      Class?    @relation(fields: [classId], references: [id])
-  invoices   Invoice[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id                   String    @id @default(uuid())
+  studentId            String    @unique
+  name                 String
+  email                String?   @unique
+  dateOfBirth          DateTime?
+  gender               Gender?
+  address              String?
+  phoneNumber          String?
+  guardianName         String?
+  guardianRelationship String?
+  guardianContact      String?
+  isArchived           Boolean   @default(false)
+
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id])
+
+  gradeId String?
+  grade   Grade?  @relation(fields: [gradeId], references: [id])
+
+  classId String?
+  class   Class?  @relation(fields: [classId], references: [id])
+
+  invoices        Invoice[]
+  attendances     Attendance[]
+  academicRecords AcademicRecord[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Teacher {
   id        String   @id @default(uuid())
   name      String
   email     String?  @unique
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id])
   classes   Class[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Grade {
+  id            String         @id @default(uuid())
+  name          String
+  schoolId      String
+  school        School         @relation(fields: [schoolId], references: [id])
+  classes       Class[]
+  feeStructures FeeStructure[]
+  students      Student[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
 model Class {
   id         String      @id @default(uuid())
-  name       String      @unique
+  name       String
+  gradeId    String
+  grade      Grade       @relation(fields: [gradeId], references: [id])
   teacherId  String?
   teacher    Teacher?    @relation(fields: [teacherId], references: [id])
   students   Student[]
@@ -69,15 +124,37 @@ model Timetable {
   updatedAt DateTime @updatedAt
 }
 
+enum BillingCycle {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model FeeStructure {
+  id           String       @id @default(uuid())
+  name         String
+  amount       Float
+  billingCycle BillingCycle
+  gradeId      String
+  grade        Grade        @relation(fields: [gradeId], references: [id])
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
 enum InvoiceStatus {
-  PAID
   UNPAID
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
   CANCELLED
 }
 
 model Invoice {
   id             String          @id @default(uuid())
+  feeName        String
   amount         Float
+  paidAmount     Float           @default(0)
+  dueDate        DateTime
   status         InvoiceStatus   @default(UNPAID)
   studentId      String
   student        Student         @relation(fields: [studentId], references: [id])
@@ -86,12 +163,46 @@ model Invoice {
   updatedAt      DateTime        @updatedAt
 }
 
+enum PaymentStatus {
+  SUCCESS
+  REVERSED
+}
+
 model PaymentLedger {
-  id        String   @id @default(uuid())
-  bankTxId  String   @unique
-  amount    Float
-  invoiceId String
-  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String        @id @default(uuid())
+  bankTxId   String        @unique
+  amount     Float
+  status     PaymentStatus @default(SUCCESS)
+  reversedBy String?
+  invoiceId  String
+  invoice    Invoice       @relation(fields: [invoiceId], references: [id])
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model AcademicRecord {
+  id         String   @id @default(uuid())
+  subject    String
+  assessment String
+  score      Float
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+model Attendance {
+  id        String           @id @default(uuid())
+  date      DateTime
+  status    AttendanceStatus
+  studentId String
+  student   Student          @relation(fields: [studentId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }

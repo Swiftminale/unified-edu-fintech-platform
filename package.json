@@ -14,5 +14,9 @@
     "@nestjs/cli": "^11.0.24",
     "next": "^16.3.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.4",
+    "pglite-server": "^0.1.5"
   }
 }

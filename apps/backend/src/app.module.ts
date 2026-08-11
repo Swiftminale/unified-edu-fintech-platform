@@ -10,6 +10,8 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { BullModule } from '@nestjs/bullmq';
 import { SisModule } from './sis/sis.module';
 import { FinanceModule } from './finance/finance.module';
+import { SchoolModule } from './school/school.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { FinanceModule } from './finance/finance.module';
         port: parseInt(process.env.REDIS_PORT || '6379', 10),
       },
     }),
+    SchoolModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [

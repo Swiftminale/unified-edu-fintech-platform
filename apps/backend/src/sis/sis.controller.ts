@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Role } from '../generated/prisma';
+import { Role, BillingCycle } from '@prisma/client';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { SisService } from './sis.service';
 import { CreateStudentDto, UpdateStudentDto } from './dto/student.dto';
@@ -12,9 +12,38 @@ export class SisController {
     private readonly prisma: PrismaService,
   ) {}
 
+  @Post('grades/bulk')
+  @Roles(Role.SuperAdmin, Role.SchoolSupervisor, Role.SchoolAdmin)
+  async bulkCreateGrades(
+    @Body()
+    dto: {
+      schoolId: string;
+      grades: {
+        name: string;
+        feeName: string;
+        feeAmount: number;
+        billingCycle: BillingCycle;
+      }[];
+    },
+  ) {
+    return this.sisService.bulkCreateGrades(dto);
+  }
+  @Post('grades')
+  @Roles(Role.SuperAdmin, Role.SchoolSupervisor, Role.SchoolAdmin)
+  async createGrade(@Body() dto: { name: string; schoolId: string }) {
+    return this.prisma.grade.create({
+      data: dto,
+    });
+  }
+
+  @Get('grades')
+  async findAllGrades() {
+    return this.prisma.grade.findMany({ include: { classes: true } });
+  }
+
   @Post('classes')
   @Roles(Role.SuperAdmin, Role.SchoolSupervisor, Role.SchoolAdmin)
-  async createClass(@Body() dto: { name: string }) {
+  async createClass(@Body() dto: { name: string; gradeId: string }) {
     return this.prisma.class.create({
       data: dto,
     });
@@ -22,7 +51,7 @@ export class SisController {
 
   @Get('classes')
   async findAllClasses() {
-    return this.prisma.class.findMany();
+    return this.prisma.class.findMany({ include: { grade: true } });
   }
 
   @Post('students')

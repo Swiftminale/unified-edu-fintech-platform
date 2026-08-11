@@ -2,9 +2,9 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateInvoiceDto } from './dto/invoice.dto';
+import { CreateInvoiceDto, CreateFeeStructureDto } from './dto/invoice.dto';
 import { ReconcilePaymentDto } from './dto/reconcile.dto';
-import { InvoiceStatus } from '../generated/prisma';
+import { InvoiceStatus } from '@prisma/client';
 
 @Injectable()
 export class FinanceService {
@@ -25,6 +25,8 @@ export class FinanceService {
       data: {
         studentId: dto.studentId,
         amount: dto.amount,
+        feeName: dto.feeName,
+        dueDate: new Date(dto.dueDate),
         status: InvoiceStatus.UNPAID,
       },
     });
@@ -55,9 +57,21 @@ export class FinanceService {
         throw new ConflictException(`Invoice with ID ${dto.invoiceId} has been cancelled`);
       }
 
+      const newPaidAmount = invoice.paidAmount + dto.amount;
+      let newStatus: InvoiceStatus = invoice.status;
+      
+      if (newPaidAmount >= invoice.amount) {
+        newStatus = InvoiceStatus.PAID;
+      } else if (newPaidAmount > 0) {
+        newStatus = InvoiceStatus.PARTIALLY_PAID;
+      }
+
       const updatedInvoice = await tx.invoice.update({
         where: { id: dto.invoiceId },
-        data: { status: InvoiceStatus.PAID },
+        data: { 
+          status: newStatus,
+          paidAmount: newPaidAmount 
+        },
       });
 
       const ledger = await tx.paymentLedger.create({
@@ -101,5 +115,67 @@ export class FinanceService {
       throw new NotFoundException(`Invoice with ID ${id} not found`);
     }
     return invoice;
+  }
+
+  async createFeeStructure(dto: CreateFeeStructureDto) {
+    return this.prisma.feeStructure.create({
+      data: dto,
+    });
+  }
+
+  async findAllFeeStructures(gradeId?: string) {
+    if (gradeId) {
+      return this.prisma.feeStructure.findMany({ where: { gradeId } });
+    }
+    return this.prisma.feeStructure.findMany();
+  }
+
+  async generateBulkInvoices(feeStructureId: string, startDate: string) {
+    const feeStructure = await this.prisma.feeStructure.findUnique({
+      where: { id: feeStructureId },
+      include: { grade: { include: { students: true } } },
+    });
+
+    if (!feeStructure) {
+      throw new NotFoundException(`Fee structure not found`);
+    }
+
+    const students = feeStructure.grade.students.filter(s => !s.isArchived);
+    const invoicesData: any[] = [];
+    const start = new Date(startDate);
+    
+    // Determine number of invoices based on billing cycle
+    let numInvoices = 1;
+    let monthsPerCycle = 12;
+    if (feeStructure.billingCycle === 'MONTHLY') {
+      numInvoices = 12;
+      monthsPerCycle = 1;
+    } else if (feeStructure.billingCycle === 'QUARTERLY') {
+      numInvoices = 4;
+      monthsPerCycle = 3;
+    }
+
+    for (const student of students) {
+      for (let i = 0; i < numInvoices; i++) {
+        const dueDate = new Date(start);
+        dueDate.setMonth(start.getMonth() + (i * monthsPerCycle));
+        
+        invoicesData.push({
+          studentId: student.id,
+          amount: feeStructure.amount,
+          feeName: `${feeStructure.name} - Installment ${i + 1}`,
+          dueDate: dueDate,
+          status: InvoiceStatus.UNPAID,
+        });
+      }
+    }
+
+    if (invoicesData.length === 0) return { count: 0 };
+
+    await this.prisma.invoice.createMany({
+      data: invoicesData,
+    });
+
+    return { count: invoicesData.length };
   }
 }

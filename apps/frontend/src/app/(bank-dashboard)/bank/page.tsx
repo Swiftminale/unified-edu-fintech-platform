@@ -158,6 +158,15 @@ export default function BankDashboard() {
             <p className="text-sm font-semibold text-zinc-200">{userName}</p>
             <p className="text-xs text-zinc-500 capitalize">{userRole}</p>
           </div>
+          {userRole === 'SuperAdmin' && (
+            <Button
+              onClick={() => router.push('/bank/schools')}
+              variant="default"
+              className="bg-violet-600 hover:bg-violet-500 text-zinc-50"
+            >
+              Manage Schools
+            </Button>
+          )}
           <Button
             onClick={handleLogout}
             variant="outline"
