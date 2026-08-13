@@ -59,7 +59,7 @@ export default function SchoolOverview() {
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-black text-orange-900 tracking-tight mt-2">
-              ${report.summary.totalExpected.toFixed(2)}
+              ETB {report.summary.totalExpected.toFixed(2)}
             </div>
             <p className="text-[13px] font-semibold text-orange-700/70 mt-2">Across all issued invoices</p>
           </CardContent>
@@ -74,7 +74,7 @@ export default function SchoolOverview() {
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-black text-emerald-900 tracking-tight mt-2">
-              ${report.summary.totalCollected.toFixed(2)}
+              ETB {report.summary.totalCollected.toFixed(2)}
             </div>
             <p className="text-[13px] font-semibold text-emerald-700/70 mt-2">Reconciled via SuperApp & Teller</p>
           </CardContent>
@@ -89,7 +89,7 @@ export default function SchoolOverview() {
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-black text-purple-900 tracking-tight mt-2">
-              ${report.summary.totalOutstanding.toFixed(2)}
+              ETB {report.summary.totalOutstanding.toFixed(2)}
             </div>
             <p className="text-[13px] font-semibold text-purple-700/70 mt-2">Pending student payments</p>
           </CardContent>
@@ -117,7 +117,7 @@ export default function SchoolOverview() {
                     <div className="flex justify-between text-sm">
                       <span className="font-bold text-slate-700">{gradeName}</span>
                       <span className="text-slate-500 font-semibold text-xs">
-                        ${stat.collected.toFixed(2)} / ${stat.expected.toFixed(2)}
+                        ETB {stat.collected.toFixed(2)} / ETB {stat.expected.toFixed(2)}
                       </span>
                     </div>
                     <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -156,7 +156,7 @@ export default function SchoolOverview() {
                     <div className="flex justify-between text-sm">
                       <span className="font-bold text-slate-700">{month}</span>
                       <span className="text-slate-500 font-semibold text-xs">
-                        ${stat.collected.toFixed(2)} / ${stat.expected.toFixed(2)}
+                        ETB {stat.collected.toFixed(2)} / ETB {stat.expected.toFixed(2)}
                       </span>
                     </div>
                     <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">

@@ -284,7 +284,7 @@ export default function BankDashboard() {
                             {invoice.id}
                           </TableCell>
                           <TableCell className="font-bold text-slate-800 text-[15px]">
-                            ${invoice.amount.toFixed(2)}
+                            ETB {invoice.amount.toFixed(2)}
                           </TableCell>
                           <TableCell className="text-right pr-8 py-4">
                             <Button
@@ -335,7 +335,7 @@ export default function BankDashboard() {
                         {ledger.studentName || 'Student'}
                       </span>
                       <span className="font-mono font-black text-emerald-600 text-[15px]">
-                        +${ledger.amount.toFixed(2)}
+                        +ETB {ledger.amount.toFixed(2)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center text-xs font-semibold text-slate-400 font-mono">

@@ -78,94 +78,98 @@ export default function SchoolsDashboard() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 text-zinc-100 font-sans p-6 md:p-12 relative overflow-x-hidden selection:bg-indigo-500/30">
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[#f8f9fc] text-slate-900 font-sans p-6 md:p-12 relative overflow-x-hidden selection:bg-purple-100 selection:text-purple-900">
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-[100px] pointer-events-none opacity-60" />
       
-      <header className="flex items-center justify-between border-b border-zinc-900 pb-6 mb-8">
+      <header className="flex items-center justify-between border-b border-slate-200 pb-6 mb-8 relative z-10">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" onClick={() => router.push('/bank')} className="text-zinc-400 hover:text-zinc-100">
+          <Button variant="ghost" onClick={() => router.push('/bank')} className="text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-full h-10 px-4">
             <ArrowLeft className="h-5 w-5 mr-1" /> Back
           </Button>
-          <div className="w-10 h-10 rounded-lg bg-violet-600 flex items-center justify-center text-zinc-50 font-bold">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold shadow-sm">
             <Landmark className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-zinc-50 to-zinc-400 bg-clip-text text-transparent">
+            <h1 className="text-xl font-extrabold text-slate-800">
               SuperAdmin Portal
             </h1>
-            <p className="text-xs text-zinc-500">Manage Partner Schools</p>
+            <p className="text-xs text-slate-500 font-medium">Manage Partner Schools</p>
           </div>
         </div>
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-violet-600 hover:bg-violet-500 text-zinc-50">
+            <Button className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-sm px-6 font-semibold h-11">
               <Plus className="h-4 w-4 mr-2" />
               Onboard New School
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-zinc-950 border-zinc-800 text-zinc-100 max-w-md">
+          <DialogContent className="bg-white border-none shadow-2xl text-slate-900 rounded-3xl p-8 max-w-md">
             <DialogHeader>
-              <DialogTitle>Onboard a New School</DialogTitle>
-              <DialogDescription className="text-zinc-400">
+              <DialogTitle className="text-2xl font-bold">Onboard a New School</DialogTitle>
+              <DialogDescription className="text-slate-500 font-medium">
                 Create a new school tenant and its initial School Supervisor account.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleOnboard} className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400">School Details</label>
-                <Input placeholder="School Name" required value={name} onChange={e => setName(e.target.value)} className="bg-zinc-900 border-zinc-800" />
-                <Input placeholder="Address (Optional)" value={address} onChange={e => setAddress(e.target.value)} className="bg-zinc-900 border-zinc-800" />
-                <Input placeholder="Phone (Optional)" value={phone} onChange={e => setPhone(e.target.value)} className="bg-zinc-900 border-zinc-800" />
+              <div className="space-y-3">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">School Details</label>
+                <Input placeholder="School Name" required value={name} onChange={e => setName(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
+                <Input placeholder="Address (Optional)" value={address} onChange={e => setAddress(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
+                <Input placeholder="Phone (Optional)" value={phone} onChange={e => setPhone(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
               </div>
-              <div className="space-y-2 pt-2 border-t border-zinc-800">
-                <label className="text-xs font-semibold text-zinc-400">Supervisor Account</label>
-                <Input placeholder="Supervisor Name" required value={supervisorName} onChange={e => setSupervisorName(e.target.value)} className="bg-zinc-900 border-zinc-800" />
-                <Input type="email" placeholder="Email Address" required value={supervisorEmail} onChange={e => setSupervisorEmail(e.target.value)} className="bg-zinc-900 border-zinc-800" />
-                <Input type="password" placeholder="Initial Password" required value={supervisorPassword} onChange={e => setSupervisorPassword(e.target.value)} className="bg-zinc-900 border-zinc-800" />
+              <div className="space-y-3 pt-4 border-t border-slate-100">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Supervisor Account</label>
+                <Input placeholder="Supervisor Name" required value={supervisorName} onChange={e => setSupervisorName(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
+                <Input type="email" placeholder="Email Address" required value={supervisorEmail} onChange={e => setSupervisorEmail(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
+                <Input type="password" placeholder="Initial Password" required value={supervisorPassword} onChange={e => setSupervisorPassword(e.target.value)} className="bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-emerald-200 py-6" />
               </div>
-              <Button type="submit" disabled={submitting} className="w-full bg-violet-600 hover:bg-violet-500">
-                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Create School & Account'}
+              <Button type="submit" disabled={submitting} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-6 rounded-full transition-all shadow-md active:scale-[0.98] mt-4">
+                {submitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Create School & Account'}
               </Button>
             </form>
           </DialogContent>
         </Dialog>
       </header>
 
-      <Card className="bg-zinc-900/40 border-zinc-900/80 backdrop-blur-sm max-w-5xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-lg font-bold flex items-center gap-2">
-            <SchoolIcon className="h-5 w-5 text-violet-400" /> 
+      <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl max-w-5xl mx-auto overflow-hidden">
+        <CardHeader className="border-b border-slate-50 pb-4">
+          <CardTitle className="text-xl font-bold flex items-center gap-2 text-slate-800">
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center">
+              <SchoolIcon className="h-4 w-4 text-emerald-500" /> 
+            </div>
             Active Schools
           </CardTitle>
-          <CardDescription className="text-zinc-500">List of all onboarded schools currently using the platform.</CardDescription>
+          <CardDescription className="text-slate-500 font-medium ml-10">List of all onboarded schools currently using the platform.</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {loading ? (
-            <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 text-violet-500 animate-spin" /></div>
+            <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 text-emerald-500 animate-spin" /></div>
           ) : schools.length === 0 ? (
-            <div className="text-center py-12 text-zinc-500 font-light flex flex-col items-center">
-              <Building2 className="h-12 w-12 text-zinc-800 mb-4" />
+            <div className="text-center py-20 text-slate-500 font-medium flex flex-col items-center">
+              <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4">
+                <Building2 className="h-8 w-8 text-slate-300" />
+              </div>
               <p>No schools onboarded yet.</p>
             </div>
           ) : (
             <Table>
-              <TableHeader className="bg-zinc-950/30">
-                <TableRow className="hover:bg-transparent border-zinc-900">
-                  <TableHead className="text-zinc-400">School Name</TableHead>
-                  <TableHead className="text-zinc-400">Contact / Address</TableHead>
-                  <TableHead className="text-zinc-400 text-right">Date Onboarded</TableHead>
+              <TableHeader className="bg-slate-50">
+                <TableRow className="hover:bg-slate-50 border-none">
+                  <TableHead className="text-slate-500 font-bold uppercase tracking-wider text-xs pl-8">School Name</TableHead>
+                  <TableHead className="text-slate-500 font-bold uppercase tracking-wider text-xs">Contact / Address</TableHead>
+                  <TableHead className="text-slate-500 font-bold uppercase tracking-wider text-xs text-right pr-8">Date Onboarded</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {schools.map(school => (
-                  <TableRow key={school.id} className="border-zinc-900 hover:bg-zinc-900/50">
-                    <TableCell className="font-semibold text-zinc-200">{school.name}</TableCell>
-                    <TableCell className="text-zinc-400 text-sm">
+                  <TableRow key={school.id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+                    <TableCell className="font-bold text-slate-800 text-[15px] pl-8 py-4">{school.name}</TableCell>
+                    <TableCell className="text-slate-600 font-medium text-sm">
                       {school.phone || 'No phone'} <br/> 
-                      <span className="text-xs text-zinc-500">{school.address || 'No address'}</span>
+                      <span className="text-xs text-slate-400 font-semibold">{school.address || 'No address'}</span>
                     </TableCell>
-                    <TableCell className="text-right text-zinc-500 text-sm font-mono">
+                    <TableCell className="text-right text-slate-500 text-sm font-mono font-semibold pr-8">
                       {new Date(school.createdAt).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
