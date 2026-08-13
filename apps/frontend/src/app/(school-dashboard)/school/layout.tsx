@@ -68,9 +68,9 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
             const isActive = pathname === item.href || (pathname === '/school' && item.href === '/school/dashboard');
             return (
               <Link key={item.name} href={item.href}>
-                <span className={`flex items-center gap-3 px-4 py-3 rounded-[14px] text-[13px] font-semibold transition-all cursor-pointer ${
+                <span className={`flex items-center gap-3 px-5 py-3.5 rounded-full text-[13px] font-bold transition-all cursor-pointer ${
                   isActive 
-                    ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400' 
+                    ? 'bg-purple-100 dark:bg-purple-900/20 text-purple-900 dark:text-purple-400' 
                     : 'text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-900'
                 }`}>
                   <item.icon className="h-4 w-4" />
@@ -85,7 +85,7 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
           <Button
             onClick={handleLogout}
             variant="ghost"
-            className="w-full justify-start text-slate-500 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-[14px] py-6 font-medium text-[13px]"
+            className="w-full justify-start text-slate-500 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full py-6 font-medium text-[13px]"
           >
             <LogOut className="h-4 w-4 mr-3" />
             Sign Out

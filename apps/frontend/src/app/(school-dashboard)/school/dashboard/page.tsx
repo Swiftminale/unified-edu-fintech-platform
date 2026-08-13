@@ -45,67 +45,67 @@ export default function SchoolOverview() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h2 className="text-3xl font-extrabold text-slate-900 dark:text-zinc-100 tracking-tight">Financial Overview</h2>
-        <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1 font-medium">Real-time aggregations of school revenue and outstanding dues.</p>
+        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Financial Overview</h2>
+        <p className="text-slate-500 text-sm mt-1 font-medium">Real-time aggregations of school revenue and outstanding dues.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-orange-50/80 dark:bg-orange-950/20 border-none shadow-sm rounded-3xl overflow-hidden">
+        <Card className="bg-orange-50/80 border-none shadow-sm rounded-3xl overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-orange-800 dark:text-orange-400">Total Expected</CardTitle>
-            <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center">
-              <DollarSign className="h-4 w-4 text-orange-600 dark:text-orange-300" />
+            <CardTitle className="text-sm font-bold text-orange-800">Total Expected</CardTitle>
+            <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+              <DollarSign className="h-4 w-4 text-orange-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-black text-orange-900 dark:text-orange-100 tracking-tight mt-2">
+            <div className="text-4xl font-black text-orange-900 tracking-tight mt-2">
               ${report.summary.totalExpected.toFixed(2)}
             </div>
-            <p className="text-[13px] font-semibold text-orange-700/70 dark:text-orange-500/70 mt-2">Across all issued invoices</p>
+            <p className="text-[13px] font-semibold text-orange-700/70 mt-2">Across all issued invoices</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-emerald-50/80 dark:bg-emerald-950/20 border-none shadow-sm rounded-3xl overflow-hidden">
+        <Card className="bg-emerald-50/80 border-none shadow-sm rounded-3xl overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Total Collected</CardTitle>
-            <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center">
-              <Wallet className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
+            <CardTitle className="text-sm font-bold text-emerald-800">Total Collected</CardTitle>
+            <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+              <Wallet className="h-4 w-4 text-emerald-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-black text-emerald-900 dark:text-emerald-100 tracking-tight mt-2">
+            <div className="text-4xl font-black text-emerald-900 tracking-tight mt-2">
               ${report.summary.totalCollected.toFixed(2)}
             </div>
-            <p className="text-[13px] font-semibold text-emerald-700/70 dark:text-emerald-500/70 mt-2">Reconciled via SuperApp & Teller</p>
+            <p className="text-[13px] font-semibold text-emerald-700/70 mt-2">Reconciled via SuperApp & Teller</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-purple-50/80 dark:bg-purple-950/20 border-none shadow-sm rounded-3xl overflow-hidden">
+        <Card className="bg-purple-50/80 border-none shadow-sm rounded-3xl overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-purple-800 dark:text-purple-400">Outstanding Dues</CardTitle>
-            <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center">
-              <Activity className="h-4 w-4 text-purple-600 dark:text-purple-300" />
+            <CardTitle className="text-sm font-bold text-purple-800">Outstanding Dues</CardTitle>
+            <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+              <Activity className="h-4 w-4 text-purple-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-black text-purple-900 dark:text-purple-100 tracking-tight mt-2">
+            <div className="text-4xl font-black text-purple-900 tracking-tight mt-2">
               ${report.summary.totalOutstanding.toFixed(2)}
             </div>
-            <p className="text-[13px] font-semibold text-purple-700/70 dark:text-purple-500/70 mt-2">Pending student payments</p>
+            <p className="text-[13px] font-semibold text-purple-700/70 mt-2">Pending student payments</p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
-        <Card className="bg-white dark:bg-zinc-950 border-none shadow-sm rounded-3xl p-2">
+        <Card className="bg-white border-none shadow-sm rounded-3xl p-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-zinc-100">
-              <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+            <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center">
+                <TrendingUp className="h-4 w-4 text-blue-500" />
               </div>
               Collection by Grade
             </CardTitle>
-            <CardDescription className="text-slate-500 dark:text-zinc-400 font-medium ml-10">Breakdown of revenue across academic levels</CardDescription>
+            <CardDescription className="text-slate-500 font-medium ml-10">Breakdown of revenue across academic levels</CardDescription>
           </CardHeader>
           <CardContent className="mt-2">
             <div className="space-y-6">
@@ -115,14 +115,14 @@ export default function SchoolOverview() {
                 return (
                   <div key={gradeName} className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="font-bold text-slate-700 dark:text-zinc-300">{gradeName}</span>
-                      <span className="text-slate-500 dark:text-zinc-500 font-semibold text-xs">
+                      <span className="font-bold text-slate-700">{gradeName}</span>
+                      <span className="text-slate-500 font-semibold text-xs">
                         ${stat.collected.toFixed(2)} / ${stat.expected.toFixed(2)}
                       </span>
                     </div>
-                    <div className="h-3 w-full bg-slate-100 dark:bg-zinc-900 rounded-full overflow-hidden">
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-blue-400 dark:bg-blue-600 rounded-full transition-all duration-1000" 
+                        className="h-full bg-blue-400 rounded-full transition-all duration-1000" 
                         style={{ width: `${progress}%` }}
                       />
                     </div>
@@ -130,21 +130,21 @@ export default function SchoolOverview() {
                 );
               })}
               {Object.keys(report.byGrade).length === 0 && (
-                 <p className="text-slate-500 dark:text-zinc-500 text-sm text-center py-8 font-medium">No data available.</p>
+                 <p className="text-slate-500 text-sm text-center py-8 font-medium">No data available.</p>
               )}
             </div>
           </CardContent>
         </Card>
         
-        <Card className="bg-white dark:bg-zinc-950 border-none shadow-sm rounded-3xl p-2">
+        <Card className="bg-white border-none shadow-sm rounded-3xl p-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-zinc-100">
-              <div className="w-8 h-8 rounded-xl bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center">
-                <Activity className="h-4 w-4 text-pink-500 dark:text-pink-400" />
+            <CardTitle className="flex items-center gap-2 text-lg font-bold text-slate-800">
+              <div className="w-8 h-8 rounded-xl bg-pink-50 flex items-center justify-center">
+                <Activity className="h-4 w-4 text-pink-500" />
               </div>
               Collection by Month
             </CardTitle>
-            <CardDescription className="text-slate-500 dark:text-zinc-400 font-medium ml-10">Monthly invoice reconciliation status</CardDescription>
+            <CardDescription className="text-slate-500 font-medium ml-10">Monthly invoice reconciliation status</CardDescription>
           </CardHeader>
           <CardContent className="mt-2">
             <div className="space-y-6">
@@ -154,14 +154,14 @@ export default function SchoolOverview() {
                 return (
                   <div key={month} className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="font-bold text-slate-700 dark:text-zinc-300">{month}</span>
-                      <span className="text-slate-500 dark:text-zinc-500 font-semibold text-xs">
+                      <span className="font-bold text-slate-700">{month}</span>
+                      <span className="text-slate-500 font-semibold text-xs">
                         ${stat.collected.toFixed(2)} / ${stat.expected.toFixed(2)}
                       </span>
                     </div>
-                    <div className="h-3 w-full bg-slate-100 dark:bg-zinc-900 rounded-full overflow-hidden">
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-pink-400 dark:bg-pink-600 rounded-full transition-all duration-1000" 
+                        className="h-full bg-pink-400 rounded-full transition-all duration-1000" 
                         style={{ width: `${progress}%` }}
                       />
                     </div>
@@ -169,7 +169,7 @@ export default function SchoolOverview() {
                 );
               })}
               {Object.keys(report.byMonth).length === 0 && (
-                 <p className="text-slate-500 dark:text-zinc-500 text-sm text-center py-8 font-medium">No data available.</p>
+                 <p className="text-slate-500 text-sm text-center py-8 font-medium">No data available.</p>
               )}
             </div>
           </CardContent>
